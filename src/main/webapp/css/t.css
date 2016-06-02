@@ -1,0 +1,299 @@
+body {
+	background-color: #fafafa;
+}
+
+/* Navbar */
+.navbar-brand,
+.navbar-nav li a {
+    line-height: 55px;
+    height: 55px;
+    padding-top: 0;
+}
+
+.navbar-brand {
+	font-size: 20px;
+}
+h3.t-sim-total {
+	margin: 0;
+	margin: 5px;
+}
+
+.navbar-default .navbar-nav > li > a {
+	transition: all .2s ease-in-out;
+	color:#ddd;
+}
+
+.navbar-default .navbar-nav > li > a:hover {
+	color:#fff;
+}
+.navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus, a.t-nav-active {
+	background-color: rgb(55, 101, 134);
+}
+
+/* Containers & sections */
+.t-container {
+	background-color: #fff;
+	padding-bottom:40px;
+}
+
+.bs-docs-section {
+	margin-top: 0px;
+}
+
+.t-jumbo {
+	border-bottom: 1px solid rgb(75, 137, 184);
+}
+
+.t-section-results {
+	background-color: #fcfcfc;
+	padding:10px;
+}
+
+footer {
+	bottom: 0;
+	width: 100%;
+	height: 120px;
+	font-size: 14px;
+	color:#ddd;
+	background-color: rgb(54,54,54);
+	padding-top: 20px;
+	margin:0;
+	border-top: 1px solid black;
+	box-shadow: 0px -1px 2px #999;
+}
+
+.btn {
+	border: none;
+}
+.t-about {
+	background-image: url(../img/bg.jpg);
+	color:#fefefe;
+}
+
+
+/*
+
+p.t-sim-checkboxes {
+	line-height: 30px;
+	height: 20px;
+}
+
+*/
+
+.t-comp-form .form-control, .t-comp-form-m .form-control {
+	border:none;
+	box-shadow: none;
+	font-weight: lighter;
+}
+
+.t-comp-form-m .form-control {
+	background-color: #f9f9f9;
+}
+
+.t-spacer-30 {
+	height: 30px;
+}
+
+.t-spacer-20 {
+	height: 20px;
+}
+
+.t-spacer-10 {
+	height: 10px;
+}
+
+.t-res-details small {
+	font-weight: light;
+	font-size: 12px;
+	color: rgb(75, 137, 184);
+	cursor: pointer;
+}
+
+.t-modal-json {
+	margin-bottom: 0;
+}
+
+a i, a {
+	cursor: pointer;
+}
+/* Text
+*/
+h1 small {
+	font-size: 13px;
+	font-weight: lighter;
+	color: rgb(128, 169, 60);
+}
+.t-important {
+	font-weight: bold;
+}
+
+.t-title {
+	font-weight: 400;
+	font-size: 21px;
+	letter-spacing:-.5px;
+}
+
+.t-blue {
+	color: rgb(95, 157, 214);
+}
+
+.t-title > .t-blue {
+	color: rgb(115, 177, 234);
+}
+
+.page-header h1 {
+	font-size: 3em;
+}
+
+.page-header h1.about {
+	font-size: 4em;
+}
+
+h1, .page-header {
+	margin-top: 30px;
+}
+
+h1.about {
+	text-shadow:0px 1px 10px black;
+}
+
+dt {
+	font-weight: 500;
+	color: rgb(65, 127, 174);
+}
+
+.t-failure-message {
+	font-size: 13px;
+	border: none;
+}
+
+.t-title-sec {
+	text-shadow:0 0 1px black;
+	letter-spacing:-1px;
+	font-weight: 300;
+}
+/* Tables & lists
+ * - Simulation results */
+dl.t-sim-results {
+	font-weight:200;
+}
+dl.t-sim-results dt {
+	width: 250px;
+	text-align:left;
+}
+
+
+/* Forms & inputs */
+.t-comp-form > .input-group-addon {
+	border:none;
+	background: none;
+	padding:0px;
+	color:#111;
+	text-align: left;
+	font-weight: lighter;
+	margin-bottom: 3px;
+	line-height: 20px;
+	width: 31px;
+	height: 20px;
+}
+input[type=text].t-input-search {
+	text-align: left;
+}
+.form-control {
+	display: inline-block;
+}
+
+.t-comp-label {
+	line-height: 23px;
+}
+.t-comp-form {
+	padding: 0;
+}
+.t-comp {
+	padding-bottom: 6px;
+}
+
+#t-circuit-textarea {
+	height: 500px;
+}
+input[type=text] {
+	height: 28px;
+	text-align: right;
+}
+
+.t-ndselect {
+	background-color: rgb(245,245,245);
+	border:none;
+	font-size: 20px;
+	box-shadow: none;
+	color:#333;
+}
+.t-ndselect:focus {
+	outline: 0;
+}
+
+.t-btn-line-height {
+	line-height: 37px;
+	height: 37px;
+}
+
+/* A trier */
+
+#t-fa-huge {
+	font-size: 59px;
+}
+.t-blue-login {
+	color: rgb(116, 143, 171)
+}
+
+.t-light {
+	color: #ededed;
+	text-shadow:0px 1px 2px #cecece;
+}
+
+.t-dark {
+	color: #666;
+}
+.t-text-about {
+	margin-top:20px;
+	line-height:23px;
+}
+.t-img-circuit {
+	max-width:708px;
+}
+
+h1.type {
+	margin-bottom:0;
+}
+
+a#t-navbar-separator:hover {
+	background-color:#333;
+	cursor: inherit;
+}
+a#t-navbar-separator {
+	padding-left: 2px;
+	padding-right: 2px;
+}
+
+div.t-optimum-checkbox.checkbox {
+	padding-top: 0px;
+	font-size: 14px;
+}
+
+.t-ofy-optimum {
+	overflow-y: auto;
+	height: 227px;
+}
+
+.t-ofy-models {
+	overflow-y: auto;
+	height: 130px;
+}
+
+.t-sim-main-form {
+	margin-bottom:0px;
+}
+
+.t-about-lead {
+	text-shadow: 1px solid black;
+}

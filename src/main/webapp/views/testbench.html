@@ -1,0 +1,233 @@
+<div class="bs-docs-section">
+  <div class="page-header">
+    <div class="row">
+      <div class="col-lg-12">
+        <h1 id="buttons">Banc de test <span class="pull-right"><i class="fa fa-pencil"></i></span></h1>
+      </div>
+    </div>
+  </div>
+  <div ng-hide="is_backend_ready" class="text-center">
+    <img src="img/ajax-loader.gif" width="22" />
+  </div>
+  <div ng-show="is_backend_ready">
+  <form class="form-horizontal"id="form-sim" name="form-sim" enctype="multipart/form-data">
+    <fieldset>
+      <div class="form-group" id="t-sim-main-form">
+        <div class="col-lg-12">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title">
+              	<select class="form-control t-ndselect" id="selectCircuit" ng-model="selectedCircuit" ng-change="setVariables(); is_circuit_selected = true;">
+              		<option value="" selected>Sélectionner une topologie</option>
+              		<option ng-repeat="c in circuits" value="{{c.id}}">{{c.name}}</option>
+		        </select>
+		      </h3>
+            </div>
+            <div class="panel-body" ng-show="is_circuit_selected">
+              <div class="col-lg-8">
+                <div class="bs-component">
+                  <img src="img/{{sim.circuitName}}.jpg" class="img-responsive t-img-circuit">
+                </div>
+              </div>
+              <div class="col-lg-4">
+                <div class="bs-component">
+                
+ 			<div ng-repeat="v in variables | filter : {group: 'Général'}">
+                    <div class="row t-comp">
+                      <div class="col-md-7 t-comp-label">{{v.name}}</div>
+                      <div class="col-md-5 t-comp-form input-group">
+                        <input class="form-control" ng-model="sim[v.shortName]" name="circuit-{{v.shortName}}" type="text" size="2" value="{{v.value}}"/>
+                         <span class="input-group-addon">{{v.unit}}</span>
+                      </div>
+                    </div>
+             	</div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6" ng-show="is_circuit_selected">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title">
+              <select class="form-control t-ndselect" id="selectTransistor" name="transistor-preset">
+              	<option>Sélectionner un transistor</option>
+              	<option value="{{$index}}" ng-repeat="t in transistors">{{t.Name}}</option>
+              	</select>
+              </h3>
+            </div>
+            <div class="panel-body" ng-show="is_transistor_selected">
+              <div class="col-md-12">
+                <div class="bs-component">
+                
+				<div ng-repeat="v in variables | filter : {group: 'transistor'}">
+                    <div class="row t-comp">
+                      <div class="col-md-3 t-comp-label">{{v.shortName}}</div>
+                        <div class="col-md-8 t-comp-form input-group">
+                          <input class="form-control" ng-model="sim[v.shortName]" type="text" size="6" /> <span class="input-group-addon">{{v.unit}}</span>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        
+        <div class="col-md-6" ng-show="is_circuit_selected">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title">
+              <select class="form-control t-ndselect" id="selectDiode" name="diode-preset">
+              	<option>Sélectionner une diode</option>
+              	<option value="{{$index}}" ng-repeat="d in diodes">{{d.name}}</option>
+              	</select>
+              </h3>
+            </div>
+            <div class="panel-body" ng-show="is_diode_selected">
+              <div class="col-md-12">
+                <div class="bs-component">
+                
+				<div ng-repeat="v in variables | filter : {group: 'Diode'}">
+                    <div class="row t-comp">
+                      <div class="col-md-3 t-comp-label">{{v.shortName}}</div>
+                        <div class="col-md-8 t-comp-form input-group">
+                          <input class="form-control" ng-model="sim[v.shortName]" type="text" size="6" /> <span class="input-group-addon">{{v.unit}}</span>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </fieldset>
+  </form>
+  <div class="row"  ng-show="is_circuit_selected && is_transistor_selected && is_diode_selected">
+    <div class="col-lg-12">
+      <p class="bs-component t-sim-checkboxes">
+        <span class="btn btn-primary btn-lg btn-block" ng-click="compute(); displayOutputLoader = true;">Ex&eacute;cuter</span>
+      </p>
+    </div>
+  </div>
+  <!--  Output  -->
+  <div class="bs-docs-section text-center" ng-show="displayOutputLoader">
+    <img src="img/ajax-loader.gif" width="22" />
+  </div>
+  <div class="bs-docs-section" ng-show="displayOutput">
+  <div class="t-spacer-30"></div>
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="page-header">
+          <h1 id="type">R&eacute;sultats <small class="text-success">simulation effectuée avec succès ({{results.output.Hidden[1].expression}} millisecondes).</small></h1>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pertes totales -->
+    <div class="well">
+    <div class="row">
+      <div class="col-md-7">
+        <h3 class="t-sim-total">Pertes totales : <span ng-repeat="r in results.output.Total" ng-show="r.name == 'Pertes totales'" ng-bind="display(r.value) + ' W'"></span></h3>
+      </div>
+      
+      <div class="col-md-3">
+        <span class="btn btn-default pull-right btn-block" id="btnShowDetails" ng-click="sim.options.showOnlyTotal = !sim.options.showOnlyTotal; setTooltips();"><span ng-if="sim.options.showOnlyTotal">Montrer</span><span ng-if="!sim.options.showOnlyTotal">Masquer</span> les d&eacute;tails du calcul</span>
+      </div>
+      <div class="col-md-2">
+        <span class="btn btn-primary btn-block" id="btnSaveTest" ng-click="saveTest();">Enregistrer ce test &nbsp;*</span>
+      </div>
+    </div>
+    </div>  
+      <small><i>* Enregistrer ce test permet d'utiliser ses donn&eacute;es lors de la cr&eacute;ation des mod&egrave;les de cellules de commutation, dans l'outil "Mod&egrave;les".</i></small>
+     
+    <!-- Détails -->
+    <div class="t-spacer-30"></div>
+
+    <div class="row t-section-results" ng-hide="sim.options.showOnlyTotal">
+      <div ng-repeat="(section, values) in results.output | orderBy:'+'" class="col-md-4" ng-hide="section == 'Total' || section == 'Hidden' || section == 'HiddenVariables'">
+        <h4>{{section}}</h4>
+        <dl class="t-sim-results dl-horizontal">
+        	<div ng-repeat="v in results.output[section]" ng-init="if (v.expression == '') {v.expression = 'Valeur statique du formulaire'}">
+        		<dt class="pull-left" ng-class="{true: 't-important', false: ''}[v.name == 'Pertes totales']" data-toggle="tooltip" data-placement="left"  title="{{v.expression}}">{{v.name}}
+        		</dt>
+        		<dd ng-bind="display(v.value) + ' ' + v.unit"></dd>
+        	</div>
+        </dl>
+      </div> 
+    </div>
+    
+    <div class="row" ng-hide="sim.options.showOnlyTotal" style="padding: 10px;">
+      <div class="col-md-12">
+       <h3>Total</h3>
+       <dl class="t-sim-results dl-horizontal">
+        	<div ng-repeat="v in results.output['Total']">
+        		<dt class="pull-left" ng-class="{true: 't-important', false: ''}[v.name == 'Pertes totales']" width="250">{{v.name}}</dt>
+        		<dd ng-bind="display(v.value) + ' ' + v.unit"></dd>
+        	</div>
+        </dl>
+       </div>
+    </div>
+
+
+  <div class="row">
+    <div class="t-spacer-10"></div>
+      <div class="col-lg-12">
+        <div class="page-header">
+          <h1 id="type">Exporter</h1>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="btn-group btn-group-justified">
+            <a data-toggle="modal" data-target=".modal-json" class="btn btn-primary">Texte (JSON)</a>
+            <!-- <a class="btn btn-primary">Tableau Excel</a>
+            <a class="btn btn-primary">PDF</a> -->
+            </div>
+        </div>
+
+        <div class="modal fade modal-json" tabindex="-1" role="dialog" aria-labelledby="myLabel" aria-hidden="true">
+          <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+              <pre class="t-modal-json">{{results | json}}</pre>
+              <a data-toggle="modal" data-target=".modal-json" class="btn btn-primary btn-lg btn-block">Fermer </a>
+            </div>
+          </div>
+        </div>
+    </div>
+</div>
+<div class="bs-docs-section" ng-show="displayFailure">
+	<span class="text-danger">Une erreur s'est produite lors du calcul. L'application renvoie le message suivant :</span><br /><br />
+	<pre class="t-failure-message">{{failureMessage}}</pre>
+	Pour <span ng-if="!bim">afficher</span><span ng-if="bim">masquer</span> l'ensemble des valeurs calculées, <a ng-click="bim = !bim">cliquez ici</a>. Pour connaître l’expression des différentes variables, survolez-les avec le curseur.<br /><br />
+	<div class="row t-section-results" ng-show="bim">
+	
+	<div ng-repeat="(section, values) in results.output | orderBy:'-'" class="col-md-4" ng-hide="section == 'Total' || section == 'Hidden' || section == 'HiddenVariables'">
+        <h4>{{section}}</h4>
+        <dl class="t-sim-results dl-horizontal">
+        	<div ng-repeat="v in results.output[section]">
+        		<dt class="pull-left" ng-class="{true: 't-important', false: ''}[v.name == 'Pertes totales']">{{v.name}}</dt>
+        		<dd ng-bind="display(v.value) + ' ' + v.unit"></dd>
+        	</div>
+        </dl>
+      </div> 
+	</div>
+	 <div class="row" ng-show="bim" style="padding: 10px;">
+      <div class="col-md-12">
+       <h3>Total</h3>
+       <dl class="t-sim-results dl-horizontal">
+        	<div ng-repeat="v in results.output['Total']">
+        		<dt class="pull-left" ng-class="{true: 't-important', false: ''}[v.name == 'Pertes totales']" width="250" title="{{v.expression}}">{{v.name}}</dt>
+        		<dd ng-bind="display(v.value) + ' ' + v.unit"></dd>
+        	</div>
+        </dl>
+       </div>
+    </div>
+	Vous pouvez corriger les entrées dans le formulaire ci-dessus puis directement réexécuter le calcul.
+</div>
+</div>
+</div>

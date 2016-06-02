@@ -1,0 +1,320 @@
+<div class="bs-docs-section">
+  <div class="page-header">
+    <div class="row">
+      <div class="col-lg-12">
+        <h1 id="buttons">Bibliothèque de composants <span class="pull-right"><i class="fa fa-folder-open"></i></span></h1>
+      </div>
+    </div>
+  </div>
+
+		<div class="row">
+			<div class="col-lg-12">
+				<h1 id="buttons">Transistors</h1>
+			</div>
+	</div>
+
+      <div class="t-spacer-20"></div>
+  <div class="row">
+    <div ng-hide="is_backend_ready_t" class="text-center">
+      <img src="img/ajax-loader.gif" width="22" />
+    </div>
+	<div class="col-lg-12" ng-show="is_backend_ready_t">
+      Filtrer la recherche : <input type="text" class="t-input-search" ng-model="q" placeholder="keyword" />
+      <small>{{transistorMessage}}</small>
+	  <span class="pull-right">
+        <a data-toggle="modal" data-target=".modal-transistor" ng-click="makeInsertTransistorForm();" class="btn btn-primary">Ajouter un modèle</a>
+      </span>
+          
+      <div class="t-spacer-20"></div>
+      <table class="table table-striped table-hover">
+        <thead>
+        <tr>
+          <th>#</th>
+          <th>Capacit&eacute;s</th>
+          <th>Transconductance Gm</th>
+          <th>Vgs, th</th>
+          <th>ROn</th>
+          <th>Ls</th>
+          <th width="50" class="text-center">Modifier</th>
+          <th width="50" class="text-center">Supprimer</th>
+        </tr>
+      </thead>
+        <tr ng-repeat="t in transistors | filter: q as results">
+          <td>&nbsp;<br /><strong>{{t.Name}}</strong></td>
+          <td>Cds = {{t.Cds}} F<br />
+          Cgd = {{t.Cgd}} F<br />
+          Cgs = {{t.Cgs}} F</td>
+          <td>&nbsp;<br />{{t.Gm}} S</td>
+          <td>&nbsp;<br />{{t.Vgsth}} V</td>
+          <td>&nbsp;<br />{{t.ROn}} Ohm</td>
+          <td>&nbsp;<br />{{t.Ls}} H</td>
+          <td class="text-center">&nbsp;<br />
+            <a data-toggle="modal" data-target=".modal-transistor" ng-click="makeUpdateTransistorForm(t.id);">
+              <i class="fa fa-pencil"></i>
+            </a>
+          </td>
+          <td class="text-center">&nbsp;<br />
+            <a data-toggle="modal" data-target=".modal-transistor-del" ng-click="makeUpdateTransistorForm(t.id);">
+              <i class="fa fa-times"></i>
+            </a>
+          </td>
+        </tr>
+        
+        <tr ng-if="results.length == 0">
+        	<td colspan="7">No results found</td>
+       	</tr>
+      </table>
+      
+		</div>
+	</div>
+  <!-- Modals : Ajouter/modifier, supprimer -->
+  <div class="modal fade modal-transistor" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-md">
+      <div class="modal-content">
+        <div class="modal-body">
+          <form class="form-horizontal"id="form-sim" name="form-sim" enctype="multipart/form-data">
+            <fieldset>
+              <div  class="row t-comp">
+                <div class="col-md-4 t-comp-label">Name</div>
+                <div class="col-md-8 t-comp-form-m">
+                  <input class="form-control" ng-model="t['Name']" type="text" size="13" />
+                </div>
+              </div>
+              <div ng-repeat="(k,v) in t" ng-hide="{{k == 'id' || k == 'Name'}}" class="row t-comp">
+                <div class="col-md-4 t-comp-label">{{k}}</div>
+                <div class="col-md-8 t-comp-form-m">
+                  <input class="form-control" ng-model="t[k]" type="text" size="13" />
+                </div>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+          <button type="submit" class="btn btn-primary" ng-show="showInsertBtn" data-dismiss="modal" ng-click="insertTransistor();">Ajouter le transistor</button>
+          <button type="submit" class="btn btn-primary" ng-show="showUpdateBtn" data-dismiss="modal" ng-click="updateTransistor();">Enregistrer les modifications</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade modal-transistor-del" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-md">
+      <div class="modal-content">
+        <div class="modal-body">
+          Êtes-vous sûr de vouloir supprimer le transistor {{t.Name}}?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+          <button type="submit" class="btn btn-primary" data-dismiss="modal" ng-click="deleteTransistor();">Supprimer le transistor</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="bs-docs-section">
+    <div class="row">
+      <div class="col-lg-12">
+        <h1>Diodes</h1>
+      </div>
+  </div>
+
+
+      <div class="t-spacer-20"></div>
+  <div class="row">
+    <div ng-hide="is_backend_ready_d" class="text-center">
+      <img src="img/ajax-loader.gif" width="22" />
+    </div>
+	<div class="col-lg-12" ng-show="is_backend_ready_d">
+      Filtrer la recherche : <input type="text" class="t-input-search" ng-model="qd" placeholder="keyword" />
+      <small>{{diodeMessage}}</small>
+	  <span class="pull-right">
+        <a data-toggle="modal" data-target=".modal-diode" ng-click="makeInsertDiodeForm();" class="btn btn-primary">Ajouter un modèle</a>
+      </span>
+          
+      <div class="t-spacer-20"></div>
+      <table class="table table-striped table-hover">
+        <thead>
+        <tr>
+          <th>#</th>
+          <th>Tension Vd (Id)</th>
+          <th>Capacité Cd</th>
+          <th width="50" class="text-center">Modifier</th>
+          <th width="50" class="text-center">Supprimer</th>
+        </tr>
+      </thead>
+        <tr ng-repeat="d in diodes | filter: qd as resultsDiodes">
+          <td>&nbsp;<br /><strong>{{d.name}}</strong><br />&nbsp;</td>
+          <td>&nbsp;<br />{{d.Vd}} V<br /></td>
+          <td>&nbsp;<br />{{d.Cd}} F<br /></td>
+          <td class="text-center">&nbsp;<br />
+            <a data-toggle="modal" data-target=".modal-diode" ng-click="makeUpdateDiodeForm(d.id);">
+              <i class="fa fa-pencil"></i>
+            </a><br />
+          </td>
+          <td class="text-center">&nbsp;<br />
+            <a data-toggle="modal" data-target=".modal-diode-del" ng-click="makeUpdateDiodeForm(d.id);">
+              <i class="fa fa-times"></i>
+            </a><br />
+          </td>
+        </tr>
+        
+        <tr ng-if="resultsDiodes.length == 0">
+        	<td colspan="7">No results found</td>
+       	</tr>
+      </table>
+      
+      <small><i>Remarque : dans l’équation de la capacité Cd, Vdr représente la tension inverse appliquée sur la diode. Dans le cas d’un buck, Vdr = Vin et dans le cas d’un boost, Vdr = Vout. </i></small>
+      
+		</div>
+	</div>
+	
+	  <!-- Modals : Ajouter/modifier, supprimer -->
+  <div class="modal fade modal-diode" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-md">
+      <div class="modal-content">
+        <div class="modal-body">
+          <form class="form-horizontal"id="form-sim" name="form-sim" enctype="multipart/form-data">
+            <fieldset>
+              <div  class="row t-comp">
+                <div class="col-md-4 t-comp-label">Name</div>
+                <div class="col-md-8 t-comp-form-m">
+                  <input class="form-control" ng-model="d['name']" type="text" size="13" />
+                </div>
+              </div>
+              <div ng-repeat="(k,v) in d" ng-hide="{{k == 'id' || k == 'name'}}" class="row t-comp">
+                <div class="col-md-4 t-comp-label">{{k}}</div>
+                <div class="col-md-8 t-comp-form-m">
+                  <input class="form-control" ng-model="d[k]" type="text" size="13" />
+                </div>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+          <button type="submit" class="btn btn-primary" ng-show="showInsertBtn" data-dismiss="modal" ng-click="insertDiode();">Ajouter la diode</button>
+          <button type="submit" class="btn btn-primary" ng-show="showUpdateBtn" data-dismiss="modal" ng-click="updateDiode();">Enregistrer les modifications</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade modal-diode-del" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-md">
+      <div class="modal-content">
+        <div class="modal-body">
+          Êtes-vous sûr de vouloir supprimer la diode {{d.Name}}?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+          <button type="submit" class="btn btn-primary" data-dismiss="modal" ng-click="deleteDiode();">Supprimer la diode</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="bs-docs-section">
+
+  <div class="page-header">
+    <div class="row">
+      <div class="col-lg-12">
+        <h1 id="buttons">Topologies</h1>
+      </div>
+    </div>
+  </div>
+  
+  <div class="row">
+    <div ng-hide="is_backend_ready_c" class="text-center">
+      <img src="img/ajax-loader.gif" width="22" />
+    </div>
+	<div class="col-lg-12" ng-show="is_backend_ready_c">
+	  <span class="pull-right">
+        <a data-toggle="modal" data-target=".modal-circuit" ng-click="makeInsertCircuitForm();" class="btn btn-primary">Ajouter un circuit</a>
+      </span>
+          
+      <div class="t-spacer-20"></div>
+      <table class="table table-striped table-hover">
+        <thead>
+        <tr>
+          <th>#</th>
+          <th>Nom</th>
+          <th>Image</th>
+          <th width="50" class="text-center">Modifier</th>
+          <th width="50" class="text-center">Supprimer</th>
+        </tr>
+      </thead>
+        <tr ng-repeat="c in circuits">
+          <td>&nbsp;<br />&nbsp;<br /><strong>{{c.shortName}}</strong><br />&nbsp;</td>
+          <td>&nbsp;<br />&nbsp;<br />{{c.name}}<br /></td>
+          <td><a href="img/{{c.shortName}}.jpg" target="_blank"><img src="img/{{c.shortName}}.jpg" style="max-height: 80px;" /></a></td>
+          <td class="text-center"><br />&nbsp;<br />
+            <a data-toggle="modal" data-target=".modal-circuit" ng-click="makeUpdateCircuitForm(c.id);">
+              <i class="fa fa-pencil"></i>
+            </a><br />
+          </td>
+          <td class="text-center">&nbsp;<br />&nbsp;<br />
+            <a data-toggle="modal" data-target=".modal-circuit-del" ng-click="makeUpdateCircuitForm(c.id);">
+              <i class="fa fa-times"></i>
+            </a><br />
+          </td>
+        </tr>
+        
+        <tr ng-if="circuits.length == 0">
+        	<td colspan="7">No results found</td>
+       	</tr>
+      </table>
+      
+		</div>
+	</div>
+		  <!-- Circuit Modals : Ajouter/modifier, supprimer -->
+  <div class="modal fade modal-circuit" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-body">
+          <form class="form-horizontal" enctype="multipart/form-data">
+            <fieldset>
+              <div  class="row t-comp">
+                <div class="col-md-4 t-comp-label">Nom</div>
+                <div class="col-md-8 t-comp-form-m">
+                  <input class="form-control" ng-model="c['name']" type="text" size="13" />
+                </div>
+              </div>
+              <div  class="row t-comp">
+                <div class="col-md-4 t-comp-label">Nom raccourci</div>
+                <div class="col-md-8 t-comp-form-m">
+                  <input class="form-control" ng-model="c['shortName']" type="text" size="13" />
+                </div>
+              </div>
+              <div  class="row t-comp">
+                <div class="col-md-12 t-comp-form-m">
+                  <textarea class="form-control" id="t-circuit-textarea" rows="50" ng-model="c['variables']" type="text" size="13" />
+                </div>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+          <button type="submit" class="btn btn-primary" ng-show="showInsertBtn" data-dismiss="modal" ng-click="insertCircuit();">Ajouter le circuit</button>
+          <button type="submit" class="btn btn-primary" ng-show="showUpdateBtn" data-dismiss="modal" ng-click="updateCircuit();">Enregistrer les modifications</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade modal-circuit-del" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-md">
+      <div class="modal-content">
+        <div class="modal-body">
+          Êtes-vous sûr de vouloir supprimer le circuit {{c.name}}?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+          <button type="submit" class="btn btn-primary" data-dismiss="modal" ng-click="deleteCircuit();">Supprimer le circuit</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+ </div>
